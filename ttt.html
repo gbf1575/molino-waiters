@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Pop-up Images</title>
+    <style>
+        /* Style the popup overlay */
+        .popupOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure the popup is above other content */
+        }
+
+        /* Style the popup image container */
+        .popupImageContainer {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* Style the image */
+        .popupImage {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Style the close button */
+        .closeButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Style for when popup is open to prevent background interaction */
+        .blur {
+            filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+
+<div id="content" class="content">
+    <button class="showButton" data-target="popupOverlay1">Show Image 1</button>
+    <button class="showButton" data-target="popupOverlay2">Show Image 2</button>
+    <button class="showButton" data-target="popupOverlay3">Show Image 3</button>
+</div>
+
+<!-- Popup Overlays -->
+<div id="popupOverlay1" class="popupOverlay">
+    <div class="popupImageContainer">
+        <img class="popupImage" src="your-image-url1.jpg" alt="Image 1">
+        <button class="closeButton" data-target="popupOverlay1">Close</button>
+    </div>
+</div>
+
+<div id="popupOverlay2" class="popupOverlay">
+    <div class="popupImageContainer">
+        <img class="popupImage" src="your-image-url2.jpg" alt="Image 2">
+        <button class="closeButton" data-target="popupOverlay2">Close</button>
+    </div>
+</div>
+
+<div id="popupOverlay3" class="popupOverlay">
+    <div class="popupImageContainer">
+        <img class="popupImage" src="your-image-url3.jpg" alt="Image 3">
+        <button class="closeButton" data-target="popupOverlay3">Close</button>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.showButton').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action
+            var target = this.getAttribute('data-target');
+            var popup = document.getElementById(target);
+            var content = document.getElementById('content');
+            popup.style.display = 'flex';
+            content.classList.add('blur');
+        });
+    });
+
+    document.querySelectorAll('.closeButton').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action
+            var target = this.getAttribute('data-target');
+            var popup = document.getElementById(target);
+            var content = document.getElementById('content');
+            popup.style.display = 'none';
+            content.classList.remove('blur');
+        });
+    });
+</script>
+
+</body>
+</html>
